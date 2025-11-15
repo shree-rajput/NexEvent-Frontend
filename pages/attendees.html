@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendees - Event Management System</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1>NexEvent</h1>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li>
+            <a href="attendees.html" class="nav-link active">Attendees</a>
+          </li>
+          <li><a href="venues.html" class="nav-link">Venues</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <section class="page-section">
+        <h1>Manage Attendees</h1>
+
+        <!-- Add Attendee Form -->
+        <div class="form-container">
+          <h2>Register New Attendee</h2>
+          <form id="attendeeForm">
+            <div class="form-group">
+              <label for="attendeeName">Full Name:</label>
+              <input
+                type="text"
+                id="attendeeName"
+                name="attendeeName"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="attendeeEmail">Email:</label>
+              <input
+                type="email"
+                id="attendeeEmail"
+                name="attendeeEmail"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="attendeePhone">Phone Number:</label>
+              <input
+                type="tel"
+                id="attendeePhone"
+                name="attendeePhone"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="attendeeEventId">Select Event:</label>
+              <select id="attendeeEventId" name="attendeeEventId" required>
+                <option value="">-- Select an Event --</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="attendeeStatus">Status:</label>
+              <select id="attendeeStatus" name="attendeeStatus">
+                <option value="registered">Registered</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              Register Attendee
+            </button>
+          </form>
+        </div>
+
+        <!-- Attendees List -->
+        <div class="list-container">
+          <h2>All Attendees</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Attendee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Event ID</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="attendeesTableBody">
+              <tr>
+                <td colspan="7" class="no-data">Loading attendees...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Event Management System. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/attendees.js"></script>
+  </body>
+</html>

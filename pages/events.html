@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Event Management System</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1>NexEvent</h1>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="../index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="attendees.html" class="nav-link">Attendees</a></li>
+          <li><a href="venues.html" class="nav-link">Venues</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <section class="page-section">
+        <h1>Manage Events</h1>
+
+        <!-- Add Event Form -->
+        <div class="form-container">
+          <h2>Create New Event</h2>
+          <form id="eventForm">
+            <div class="form-group">
+              <label for="eventName">Event Name:</label>
+              <input type="text" id="eventName" name="eventName" required />
+            </div>
+
+            <div class="form-group">
+              <label for="eventDate">Event Date & Time:</label>
+              <input
+                type="datetime-local"
+                id="eventDate"
+                name="eventDate"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="eventDescription">Description:</label>
+              <textarea
+                id="eventDescription"
+                name="eventDescription"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="eventLocation">Location:</label>
+              <input
+                type="text"
+                id="eventLocation"
+                name="eventLocation"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Event</button>
+          </form>
+        </div>
+
+        <!-- Events List -->
+        <div class="list-container">
+          <h2>All Events</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Event ID</th>
+                <th>Event Name</th>
+                <th>Date & Time</th>
+                <th>Location</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTableBody">
+              <tr>
+                <td colspan="5" class="no-data">Loading events...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Event Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
