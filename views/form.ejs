@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate') %>
+
+<h1><%= entity %> Form</h1>
+
+<form action="<%= action %>" method="POST" >
+<div class="mb-3">
+  <% if(entity === 'Event') { %>
+    <label class="form-label">Name:</label><br/>
+    <input type="text" name="eventname" value="<%= event.EVENT_NAME || '' %>" required class="form-control"/><br/>
+
+    <label class="form-label">Date & Time:</label><br/>
+    <input type="datetime-local" name="eventdate"
+      value="<%= event.EVENT_DATE ? (new Date(event.EVENT_DATE)).toISOString().slice(0,16) : '' %>" required class="form-control"/><br/>
+
+    <label class="form-label">Location:</label><br/>
+    <input type="text" name="location" value="<%= event.LOCATION || '' %>" class="form-control"/><br/>
+
+    <label class="form-label">Description:</label><br/>
+    <textarea name="description" class="form-control"><%= event.DESCRIPTION || '' %></textarea><br/>
+
+  <% } else if(entity === 'Attendee') { %>
+
+    <label class="form-label">Name:</label><br/>
+    <input type="text" name="name" value="<%= attendee.NAME || '' %>" required class="form-control"/><br/>
+
+    <label class="form-label">Email:</label><br/>
+    <input type="email" name="email" value="<%= attendee.EMAIL || '' %>" class="form-control"/><br/>
+
+    <label class="form-label">Number:</label><br/>
+    <input type="text" name="number" value="<%= attendee.NUMBER || '' %>" required class="form-control"/><br/>
+
+    <label class="form-label">Event:</label><br/>
+    <select name="eventid" required>
+      <% for(let e of events) { %>
+        <option value="<%= e.EVENT_ID %>" <%= attendee.EVENT_ID === e.EVENT_ID ? 'selected' : '' %>><%= e.EVENT_NAME %></option>
+      <% } %>
+    </select><br/>
+
+    <label class="form-label">Status:</label><br/>
+    <input type="text" name="status" value="<%= attendee.STATUS || 'registered' %>" class="form-control"/><br/>
+
+  <% } %>
+</div>
+<a href="<%= entity === 'Event' ? '/events' : (attendee.EVENT_ID ? '/events/' + attendee.EVENT_ID + '/attendees' : '/attendees') %>"><i class="fa-solid fa-arrow-left"></i></a>
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+  
+</form>
+

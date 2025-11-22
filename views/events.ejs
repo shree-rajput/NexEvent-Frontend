@@ -1,0 +1,59 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Events</h1>
+<a href="/events/new" class="btn btn-primary mb-3 mt-2">Add New Event</a>
+<table cellpadding="5" class="table table-primary table-striped-columns">
+  <thead>
+    <tr class="table-primary">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let event of events) { %>
+    <tr>
+      <td><%= event.EVENT_ID %></td>
+      <td>
+        <a
+          href="/events/<%= event.EVENT_ID %>/attendees"
+          style="text-decoration: none; color: black"
+          ><%= event.EVENT_NAME %>
+        </a>
+      </td>
+      <td>
+        <%= event.EVENT_DATE ? (new
+        Date(event.EVENT_DATE)).toISOString().slice(0, 16).replace('T', ' ') :
+        'N/A' %>
+      </td>
+      <td><%= event.LOCATION %></td>
+      <td><%= event.DESCRIPTION %></td>
+      <td>
+        <a
+          href="/events/<%= event.EVENT_ID %>/edit"
+          type="button"
+          class="btn btn-primary mt-2"
+          >Edit</a
+        >
+
+        <form
+          action="/events/<%= event.EVENT_ID %>?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button
+            class="btn btn-danger mt-2"
+            type="submit"
+            onclick="return confirm('Delete this event?')"
+          >
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

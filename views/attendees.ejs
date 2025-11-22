@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate') -%>
+
+<h1>Attendees <%= event ? ('for ' + event.EVENT_NAME) : '' %></h1>
+
+<a
+  href="<%= event ? '/events/' + event.EVENT_ID + '/attendees/new' : '/attendees/new' %>"
+  class="btn btn-primary mb-3"
+  >Add New Attendee</a
+>
+
+<table cellpadding="5" class="table table-primary table-striped-columns">
+  <thead>
+    <tr class="table-primary">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Number</th>
+      <th>Event</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let att of attendees) { %>
+    <tr class="table-primary">
+      <td><%= att.ATTENDEE_ID %></td>
+      <td><%= att.NAME %></td>
+      <td><%= att.EMAIL || 'N/A' %></td>
+      <td><%= att.NUMBER %></td>
+      <td><%= att.EVENT_NAME || (event ? event.EVENT_NAME : 'N/A') %></td>
+      <td><%= att.STATUS %></td>
+      <td>
+        <a href="/attendees/<%= att.ATTENDEE_ID %>/edit" class="btn btn-primary"
+          >Edit</a
+        >
+        <form
+          action="/attendees/<%= att.ATTENDEE_ID %>?_method=DELETE"
+          method="POST"
+          style="display: inline"
+        >
+          <button
+            type="submit"
+            onclick="return confirm('Delete this attendee?')"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
