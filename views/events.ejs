@@ -1,7 +1,9 @@
 <% layout('layouts/boilerplate') -%>
 
 <h1>Events</h1>
+<% if(user && user.ROLE === 'organizer') { %>
 <a href="/events/new" class="btn btn-primary mb-3 mt-2">Add New Event</a>
+<% } %>
 <table cellpadding="5" class="table table-primary table-striped-columns">
   <thead>
     <tr class="table-primary">
@@ -15,15 +17,11 @@
   </thead>
   <tbody>
     <% for(let event of events) { %>
+    <% const isAttending = attendingEvents.includes(event.EVENT_ID); %>
+    <% const isOrganizer = user && event.ORGANIZER_ID === user.USER_ID; %>
     <tr>
       <td><%= event.EVENT_ID %></td>
-      <td>
-        <a
-          href="/events/<%= event.EVENT_ID %>/attendees"
-          style="text-decoration: none; color: black"
-          ><%= event.EVENT_NAME %>
-        </a>
-      </td>
+      <td><%= event.EVENT_NAME %></td>
       <td>
         <%= event.EVENT_DATE ? (new
         Date(event.EVENT_DATE)).toISOString().slice(0, 16).replace('T', ' ') :
@@ -32,26 +30,43 @@
       <td><%= event.LOCATION %></td>
       <td><%= event.DESCRIPTION %></td>
       <td>
-        <a
-          href="/events/<%= event.EVENT_ID %>/edit"
-          type="button"
-          class="btn btn-primary mt-2"
-          >Edit</a
-        >
-
-        <form
-          action="/events/<%= event.EVENT_ID %>?_method=DELETE"
-          method="POST"
-          style="display: inline"
-        >
-          <button
-            class="btn btn-danger mt-2"
-            type="submit"
-            onclick="return confirm('Delete this event?')"
+        <% if(isOrganizer) { %>
+          <a
+            href="/events/<%= event.EVENT_ID %>/edit"
+            type="button"
+            class="btn btn-primary me-2"
+            >Edit</a
           >
-            Delete
-          </button>
-        </form>
+
+          <a
+            href="/events/<%= event.EVENT_ID %>/attendees"
+            type="button"
+            class="btn btn-secondary me-2"
+            >View Attendees</a
+          >
+
+          <form
+            action="/events/<%= event.EVENT_ID %>?_method=DELETE"
+            method="POST"
+            style="display: inline"
+          >
+            <button
+              class="btn btn-danger"
+              type="submit"
+              onclick="return confirm('Delete this event?')"
+            >
+              Delete
+            </button>
+          </form>
+        <% } else if(user && user.ROLE === 'attendee') { %>
+          <% if(isAttending) { %>
+            <form action="/events/<%= event.EVENT_ID %>/leave" method="POST" style="display: inline">
+              <button class="btn btn-warning" type="submit" onclick="return confirm('Leave this event?')">Leave Event</button>
+            </form>
+          <% } else { %>
+            <a href="/events/<%= event.EVENT_ID %>/join" class="btn btn-success">Join Event</a>
+          <% } %>
+        <% } %>
       </td>
     </tr>
     <% } %>

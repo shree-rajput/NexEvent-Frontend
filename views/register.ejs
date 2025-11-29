@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Register for NexEvent</h3>
+        </div>
+        <div class="card-body">
+          <% if(typeof error !== 'undefined') { %>
+            <div class="alert alert-danger"><%= error %></div>
+          <% } %>
+          <form action="/register" method="POST">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" name="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="role" class="form-label">Role</label>
+              <select name="role" id="role" class="form-select" required>
+                <option value="attendee">Attendee</option>
+                <option value="organizer">Organizer</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <small>Already have an account? <a href="/login">Login here</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

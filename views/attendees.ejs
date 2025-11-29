@@ -2,11 +2,9 @@
 
 <h1>Attendees <%= event ? ('for ' + event.EVENT_NAME) : '' %></h1>
 
-<a
-  href="<%= event ? '/events/' + event.EVENT_ID + '/attendees/new' : '/attendees/new' %>"
-  class="btn btn-primary mb-3"
-  >Add New Attendee</a
->
+<% if(event && user && event.ORGANIZER_ID === user.USER_ID) { %>
+<a href="/events/<%= event.EVENT_ID %>/attendees/new" class="btn btn-primary mb-3">Add Attendee Manually</a>
+<% } %>
 
 <table cellpadding="5" class="table table-primary table-striped-columns">
   <thead>
@@ -22,6 +20,8 @@
   </thead>
   <tbody>
     <% for(let att of attendees) { %>
+    <% const isOwner = user && att.USER_ID === user.USER_ID; %>
+    <% const isOrganizer = user && event && event.ORGANIZER_ID === user.USER_ID; %>
     <tr class="table-primary">
       <td><%= att.ATTENDEE_ID %></td>
       <td><%= att.NAME %></td>
@@ -30,22 +30,16 @@
       <td><%= att.EVENT_NAME || (event ? event.EVENT_NAME : 'N/A') %></td>
       <td><%= att.STATUS %></td>
       <td>
-        <a href="/attendees/<%= att.ATTENDEE_ID %>/edit" class="btn btn-primary"
-          >Edit</a
-        >
-        <form
-          action="/attendees/<%= att.ATTENDEE_ID %>?_method=DELETE"
-          method="POST"
-          style="display: inline"
-        >
-          <button
-            type="submit"
-            onclick="return confirm('Delete this attendee?')"
-            class="btn btn-danger"
-          >
-            Delete
-          </button>
-        </form>
+        <% if(isOwner) { %>
+          <a href="/attendees/<%= att.ATTENDEE_ID %>/edit" class="btn btn-primary me-2">Edit</a>
+          <form action="/attendees/<%= att.ATTENDEE_ID %>?_method=DELETE" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Leave this event?')">Leave Event</button>
+          </form>
+        <% } else if(isOrganizer) { %>
+          <form action="/attendees/<%= att.ATTENDEE_ID %>?_method=DELETE" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Remove this attendee?')">Remove Attendee</button>
+          </form>
+        <% } %>
       </td>
     </tr>
     <% } %>
