@@ -1,0 +1,18 @@
+now I want 
+we have one login page that contain 
+2 roles
+-> organizers
+-> attendies
+
+now the thing organizers can do 2 things
+1st they can create a event , they can , delete that event , they can update the event
+2nd they can manage the attendess with there perticular event 
+
+attendies can do 2 things
+1st they can select a perticular available event 
+can enroll in that event in that event 
+
+
+I hope you undestand what I want say
+I need to SQL , express , ejs , css
+for making this event manangement system named as nexEvent

@@ -11,14 +11,13 @@ const port = 8080;
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Shree100@2007', // replace with your password
+  password: 'Shree100@2007', 
   database: 'nexevent'
 });
 
 connection.connect(err => {
   if (err) {
     console.error('MySQL connection error:', err);
-    process.exit(1);
   }
   console.log('Connected to MySQL');
 });
@@ -41,7 +40,7 @@ app.get('/', (req, res) => {
 // List all events
 app.get('/events', (req, res) => {
   connection.query('SELECT * FROM EVENT', (err, events) => {
-    if (err) return res.send('Error fetching events');
+    if (err) return res.send('Error in fetching events');
     res.render('events', { events });
   });
 });
@@ -175,6 +174,44 @@ app.delete('/attendees/:id', (req, res) => {
       res.redirect(eventId ? `/events/${eventId}/attendees` : '/attendees');
     });
   });
+});
+
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", (req, res) => {
+  const { username, password, role } = req.body;
+
+  const sql = "SELECT * FROM USERS WHERE USERNAME = ? AND PASSWORD = ? AND ROLE = ?";
+  connection.query(sql, [username, password, role], (err, results) => {
+    if (err) return res.send("Database error");
+    if (results.length === 0) return res.send("❌ Invalid Credentials");
+
+    // Login successful
+    if (role === "organizer") {
+      res.redirect("/events");
+    } else {
+      res.redirect("/attendees");
+    }
+  });
+});
+
+
+app.post("/login", (req, res) => {
+    const { username, password, role } = req.body;
+
+    // Dummy authentication (replace with DB check)
+    if (username && password) {
+        if (role === "organizer") {
+            return res.redirect("/organizer/dashboard");
+        } else if (role === "attendee") {
+            return res.redirect("/attendee/dashboard");
+        }
+    }
+
+    res.send("Invalid login");
 });
 
 // Start server
